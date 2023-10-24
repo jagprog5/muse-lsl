@@ -3,6 +3,30 @@
 
 # Muse LSL
 
+I installed the lsl dependency from source:
+
+https://github.com/sccn/liblsl
+
+```bash
+# in that repo, something like:
+mkdir build && cd build && cmake .. && sudo make install
+```
+
+In both terminals below I added this so muselsl can find it:
+
+```bash
+export LD_LIBRARY_PATH=/usr/local/lib
+```
+
+In one terminal, run `muselsl stream`. Wait for it to start up. In the other, run  [neurofeedback.py](./examples/neurofeedback.py).
+
+Other files that I added:
+
+ - [range_division](./examples/range_divisions.py), for what threshold should be used to identify from 4 images
+ - [time_series_avg](./examples/time_series_avg.py), for logic on taking the mean of n values before sending to the output
+
+=========================================================================
+
 A Python package for streaming, visualizing, and recording EEG data from the Muse devices developed by InteraXon.
 
 ![Blinks](blinks.png)

@@ -27,6 +27,7 @@ class Band:
     Alpha = 2
     Beta = 3
 
+import csv
 
 """ EXPERIMENTAL PARAMETERS """
 # Modify these to change aspects of the signal processing
@@ -93,6 +94,9 @@ if __name__ == "__main__":
     # script with <Ctrl-C>
     print('Press Ctrl-C in the console to break the while loop.')
 
+    rows = [[],[]]
+    fields=['Alpha', 'Beta']
+
     try:
         # The following loop acquires data, computes band powers, and calculates neurofeedback metrics based on those band powers
         while True:
@@ -138,9 +142,12 @@ if __name__ == "__main__":
             # Beta Protocol:
             # Beta waves have been used as a measure of mental activity and concentration
             # This beta over theta ratio is commonly used as neurofeedback for ADHD
-            # beta_metric = smooth_band_powers[Band.Beta] / \
-            #     smooth_band_powers[Band.Theta]
-            # print('Beta Concentration: ', beta_metric)
+            beta_metric = smooth_band_powers[Band.Beta] / \
+                smooth_band_powers[Band.Theta]
+            print('Beta Concentration: ', beta_metric)
+
+            rows[0].append(alpha_metric)
+            rows[1].append(beta_metric)
 
             # Alpha/Theta Protocol:
             # This is another popular neurofeedback metric for stress reduction
@@ -151,3 +158,9 @@ if __name__ == "__main__":
 
     except KeyboardInterrupt:
         print('Closing!')
+        with open('output.csv', 'w') as f:
+            write = csv.writer(f)
+            write.writerow(fields)
+            for i in range(len(rows[0])):
+                write.writerow([rows[0][i], rows[1][i]])
+
